@@ -45,7 +45,7 @@ router.post('/access', upload.single('image'), (req, res, next) => {
 
     var mail = {
       from: "info@abayakasthaa.com", 
-      to: email,
+      to: "info@abayakasthaa.com",
       subject:"Enquiry", 
       message: "Enquiry",
       html:"<strong>"+"Name : "+"</strong>"+ name+"<br>"+"<strong>"+"Email : "+"</strong>"+email+"<br>"+"<strong>"+"Message : "+"</strong>"+message
@@ -72,7 +72,7 @@ router.post('/access', upload.single('image'), (req, res, next) => {
   
       var mail = {
         from: "info@abayakasthaa.com", 
-        to: email,
+        to: "info@abayakasthaa.com",
         subject:"Contact", 
         message: "Contact",
         html:"<strong>"+"Name : "+"</strong>"+ name+"<br>"+"<strong>"+"Email : "+"</strong>"+email+"<br>"+"<strong>"+"Message : "+"</strong>"+message
