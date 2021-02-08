@@ -1,5 +1,6 @@
 const express = require('express')
 const { Router } = require('express');
+const Razorpay  = require('razorpay');
 const { json } = require('body-parser');
 const router = express.Router()
 let nodemailer = require('nodemailer');
@@ -38,6 +39,34 @@ var transporter = nodemailer.createTransport({
       console.log("Server is ready to take our messages!");
     }
   });
+
+  const instance = new Razorpay({
+    key_id: 'rzp_test_SdY6h3N8idtwex',
+    key_secret: 'y9h7qfG4LDcIznqpAzaGVBHN',
+});
+router.post("/order", (req, res) => {
+  try {
+    const options = {
+      amount: 10 * 100, // amount == Rs 10
+      currency: "INR",
+      receipt: "receipt#1",
+      payment_capture: 0,
+ // 1 for automatic capture // 0 for manual capture
+    };
+  instance.orders.create(options, async function (err, order) {
+    if (err) {
+      return res.status(500).json({
+        message: "Something Went Wrong",
+      });
+    }
+  return res.status(200).json(order);
+ });
+} catch (err) {
+  return res.status(500).json({
+    message: "Something Went Wrong",
+  });
+ }
+});
 router.post('/access', upload.single('image'), (req, res, next) => {
   const {name,email,message} = req.body
    
@@ -46,8 +75,8 @@ router.post('/access', upload.single('image'), (req, res, next) => {
     var mail = {
       from: "info@abayakasthaa.com", 
       to: "info@abayakasthaa.com",
-      subject:"Enquiry", 
-      message: "Enquiry",
+      subject:"wants to Download Clinical Trial Report", 
+      message:"wants to Download Clinical Trial Report",
       html:"<strong>"+"Name : "+"</strong>"+ name+"<br>"+"<strong>"+"Email : "+"</strong>"+email+"<br>"+"<strong>"+"Message : "+"</strong>"+message
     }
     transporter.sendMail(mail, (err, data) => {
